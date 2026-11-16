@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fleet Dashboard</title>
+    <link rel="stylesheet" href="/vendor/xterm/css/xterm.css" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">F</div>
+        <div>
+          <h1>Fleet</h1>
+          <p>opencode terminal dashboard</p>
+        </div>
+      </div>
+
+      <form id="spawn-form" class="spawn-form" autocomplete="off">
+        <label>
+          <span>Name <em>optional</em></span>
+          <input id="session-title" name="title" type="text" placeholder="api-refactor" maxlength="120" />
+        </label>
+        <label>
+          <span>Directory</span>
+          <input
+            id="session-cwd"
+            name="cwd"
+            type="text"
+            list="cwd-history"
+            placeholder="C:\\Users\\User\\project"
+            required
+          />
+          <datalist id="cwd-history"></datalist>
+        </label>
+        <label>
+          <span>Command</span>
+          <input id="session-command" name="command" type="text" placeholder="opencode" />
+        </label>
+        <button id="spawn-button" type="submit">Spawn agent</button>
+        <p id="spawn-error" class="form-error" role="alert" hidden></p>
+      </form>
+
+      <div class="sidebar-section">
+        <div class="section-head">
+          <span>Sessions</span>
+          <span id="session-count" class="count">0</span>
+        </div>
+        <div id="session-list" class="session-list"></div>
+      </div>
+
+      <div class="sidebar-foot">
+        <span class="conn-dot" id="server-dot"></span>
+        <span id="server-label">connecting…</span>
+      </div>
+    </aside>
+
+    <main class="workspace">
+      <div id="empty-state" class="empty-state">
+        <div class="empty-glyph">&gt;_</div>
+        <h2>No agents running</h2>
+        <p>Point the form at a project directory and spawn an opencode instance.</p>
+        <p class="hint">Each terminal is a persistent PTY. Closing this tab does not stop the agent.</p>
+      </div>
+      <section id="terminal-grid" class="terminal-grid" aria-live="polite"></section>
+    </main>
+
+    <script src="/vendor/xterm/lib/xterm.js"></script>
+    <script src="/vendor/addon-fit/lib/addon-fit.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>
